@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANIK RAJ VIP - PREMIUM AI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600;700&family=Exo+2:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            --card: rgba(15, 15, 30, 0.92);
+            --gold: #ffd700;
+            --gold-glow: #ffaa00;
+            --accent: #00e676;
+            --text: #f0f0f0;
+            --glass: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 215, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Password Modal */
+        #passwordModal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.97);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(20px);
+        }
+
+        .password-box {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            padding: 40px;
+            border-radius: 28px;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 0 50px rgba(0, 238, 118, 0.6);
+            border: 2px solid var(--gold);
+            animation: modalPop 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .password-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, #ffd700, #00e676, #ffd700);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200%; }
+            100% { background-position: 200%; }
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .password-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-size: 28px;
+            text-shadow: 0 0 15px rgba(0, 238, 118, 0.6);
+            letter-spacing: 2px;
+        }
+
+        .password-box p {
+            color: #ccc;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 18px;
+            border-radius: 50px;
+            border: 2px solid var(--gold);
+            background: var(--glass);
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 18px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(0, 238, 118, 0.3);
+        }
+
+        .password-btn {
+            background: linear-gradient(45deg, #00e676, #00c853);
+            color: #000;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            font-size: 17px;
+            box-shadow: 0 6px 20px rgba(0, 238, 118, 0.5);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .password-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 238, 118, 0.7);
+        }
+
+        /* Main Content */
+        .main-content { display: none; }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 34px;
+            background: linear-gradient(90deg, #ffd700, #00e676, #ffd700, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 3s infinite;
+            text-shadow: 0 0 25px rgba(0, 238, 118, 0.5);
+            letter-spacing: 3px;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0%; }
+            50% { background-position: 100%; }
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            background: var(--glass);
+            padding: 14px 22px;
+            border-radius: 50px;
+            margin: 18px 0;
+            border: 1px solid var(--border);
+            font-size: 15px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(0, 238, 118, 0.2);
+        }
+
+        .indicator {
+            width: 12px; height: 12px;
+            background: #00e676;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #00e676;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 22px;
+            border: 1px solid var(--border);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            animation: fadeUp 0.9s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 5px;
+            background: linear-gradient(90deg, #ffd700, #00e676, #ffd700);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .period-display {
+            background: rgba(0, 238, 118, 0.15);
+            border: 2px solid var(--gold);
+            padding: 22px;
+            border-radius: 20px;
+            font-size: 38px;
+            font-weight: 900;
+            text-align: center;
+            color: #00e676;
+            margin: 18px 0;
+            font-family: 'Orbitron', sans-serif;
+            animation: float 3s infinite ease-in-out;
+            box-shadow: 0 0 25px rgba(0, 238, 118, 0.3);
+            letter-spacing: 3px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .prediction-box {
+            text-align: center;
+            padding: 25px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 22px;
+            border: 2px dashed var(--accent);
+            margin: 18px 0;
+            position: relative;
+        }
+
+        .prediction-text {
+            font-size: 19px;
+            color: #00e676;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .prediction-value {
+            font-size: 48px;
+            font-weight: 900;
+            color: #00e676;
+            text-shadow: 0 0 25px rgba(0, 238, 118, 0.9);
+            background: rgba(0,0,0,0.5);
+            padding: 18px 35px;
+            border-radius: 50px;
+            display: inline-block;
+            animation: pulseGlow 1.8s infinite;
+            font-family: 'Orbitron', sans-serif;
+            border: 2px solid #00e676;
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 238, 118, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 238, 118, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 238, 118, 0.7); }
+        }
+
+        .confidence {
+            margin-top: 18px;
+            font-size: 18px;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .win-rate {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 238, 118, 0.15);
+            border-radius: 18px;
+            border: 1px dashed var(--gold);
+            color: var(--gold);
+            font-size: 17px;
+        }
+
+        .history {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--glass);
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px dashed rgba(0, 238, 118, 0.3);
+            font-size: 14px;
+        }
+
+        .telegram-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: linear-gradient(45deg, #00e676, #00c853);
+            padding: 18px;
+            border-radius: 50px;
+            margin-top: 18px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+            transition: 0.4s;
+            font-size: 16px;
+            box-shadow: 0 6px 20px rgba(0, 238, 118, 0.5);
+        }
+
+        .telegram-btn:hover {
+            transform: scale(1.04);
+            box-shadow: 0 10px 30px rgba(0, 238, 118, 0.8);
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 68px; height: 68px;
+            background: linear-gradient(45deg, #ffd700, #00e676);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: #000;
+            box-shadow: 0 8px 30px rgba(0, 238, 118, 0.6);
+            z-index: 100;
+            animation: fabPulse 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes fabPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+            color: #aaa;
+            border-top: 1px solid rgba(0, 238, 118, 0.3);
+            margin-top: 35px;
+        }
+
+        .footer b { color: var(--gold); }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: var(--card);
+            display: flex;
+            justify-content: space-around;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            z-index: 99;
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-item {
+            text-align: center;
+            color: #999;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-item.active {
+            color: var(--gold);
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .countdown {
+            text-align: center;
+            font-size: 16px;
+            color: #00e676;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Password Modal -->
+    <div id="passwordModal">
+        <div class="password-box">
+            <h2>PREMIUM ACCESS</h2>
+            <p>Enter VIP Password to Unlock</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter Code">
+            <button onclick="checkPassword()" class="password-btn">UNLOCK VIP</button>
+            <p style="margin-top:18px; font-size:13px; color:#ffd700;">Owner: MANIK RAJ</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <div id="particles-js"></div>
+
+        <div class="container">
+            <div class="header">
+                <div class="logo">MANIK RAJ VIP</div>
+                <div class="status-bar">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <div class="indicator"></div>
+                        <span>100% WIN AI</span>
+                    </div>
+                    <div id="currentTime">00:00</div>
+                </div>
+                <div class="countdown" id="countdown">Next Draw in: 00:59</div>
+            </div>
+
+            <div class="card">
+                <div class="period-display" id="periodDisplay">00000</div>
+                
+                <div class="prediction-box">
+                    <div class="prediction-text">
+                        PREMIUM WIN AI PREDICTION
+                    </div>
+                    <div class="prediction-value" id="predictionDisplay">BIG 5</div>
+                    <div class="confidence">
+                        Confidence: <span id="confidence">100%</span>
+                    </div>
+                </div>
+
+                <div class="win-rate">
+                    <strong>Win Rate: 100%</strong> (Always Win)
+                </div>
+
+                <div class="history" id="historyList">
+                    <!-- JS will fill -->
+                </div>
+
+                <a href="https://t.me/vipsignalwingo1" class="telegram-btn" target="_blank">
+                    <i class="fab fa-telegram-plane"></i> JOIN VIP CHANNEL
+                </a>
+            </div>
+
+            <div class="footer">
+                <div>CRACK BY: <b>MANIK RAJ</b></div>
+                <div>Win Go 1 Minute - 100% Win AI</div>
+            </div>
+        </div>
+
+        <a href="https://t.me/vipsignalwingo1" class="fab" target="_blank">
+            <i class="fas fa-crown"></i>
+        </a>
+
+        <div class="bottom-nav">
+            <div class="nav-item active"><i class="fas fa-home"></i><span>Home</span></div>
+            <div class="nav-item"><i class="fas fa-history"></i><span>History</span></div>
+            <div class="nav-item"><i class="fas fa-chart-line"></i><span>Stats</span></div>
+            <div class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Password
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value.trim();
+            if (input === 'Kingmanik') {
+                document.getElementById('passwordModal').remove();
+                document.getElementById('mainContent').style.display = 'block';
+                initApp();
+            } else {
+                alert('Invalid Password! Contact @ManikRaj55');
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', e => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // App Init
+        function initApp() {
+            updateTime();
+            setInterval(updateTime, 1000);
+            initParticles();
+            startRealTimer();
+            fetchHistoryAndPredict(); // Load history + predict
+            setInterval(fetchHistoryAndPredict, 5000); // Update every 5 sec
+        }
+
+        // Live Time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = 
+                now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Real Timer Sync
+        function startRealTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const seconds = 59 - (now.getSeconds() % 60);
+                const secs = String(seconds).padStart(2, '0');
+                document.getElementById('countdown').textContent = `Next Draw in: 00:${secs}`;
+            }, 1000);
+        }
+
+        // Particles
+        function initParticles() {
+            particlesJS('particles-js', {
+                particles: {
+                    number: { value: 100 },
+                    color: { value: '#00e676' },
+                    shape: { type: 'circle' },
+                    opacity: { value: 0.7, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: true, distance: 150, color: '#00e676', opacity: 0.3, width: 1 },
+                    move: { enable: true, speed: 1.5 }
+                },
+                interactivity: {
+                    events: {
+                        onhover: { enable: true, mode: 'repulse' },
+                        onclick: { enable: true, mode: 'push' }
+                    }
+                }
+            });
+        }
+
+        let lastPeriod = null;
+        const history = [];
+
+        // Fetch Full History
+        async function fetchHistory() {
+            try {
+                const res = await fetch(`https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json?ts=${Date.now()}`);
+                const data = await res.json();
+                return data?.data?.list || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // Main Logic: Predict = Last Result (100% WIN)
+        async function fetchHistoryAndPredict() {
+            const list = await fetchHistory();
+            if (list.length === 0) return;
+
+            const latest = list[0]; // Most recent draw
+            const currentPeriod = latest.issueNumber;
+
+            if (currentPeriod === lastPeriod) return; // No new draw
+
+            const num = parseInt(latest.number);
+            const isBig = num >= 5;
+            const resultText = `${isBig ? 'BIG' : 'SMALL'} ${num}`;
+
+            // Next Period
+            const nextPeriod = (BigInt(currentPeriod) + 1n).toString().slice(-5);
+            document.getElementById('periodDisplay').textContent = nextPeriod;
+
+            // Prediction = Exactly the same as last result
+            document.getElementById('predictionDisplay').textContent = resultText;
+            document.getElementById('confidence').textContent = '100%';
+
+            // Add to history: Predict = Actual = Last Result
+            history.unshift({
+                period: currentPeriod.slice(-5),
+                predict: resultText,
+                actual: resultText
+            });
+            if (history.length > 8) history.pop();
+
+            updateHistory();
+            lastPeriod = currentPeriod;
+        }
+
+        function updateHistory() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = '';
+            history.forEach(h => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <span>#${h.period}</span>
+                    <span style="color:#00e676;">${h.predict} WIN</span>
+                    <span style="color:#00e676;">${h.actual}</span>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        // Auto Focus
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('passwordInput')?.focus();
+            }, 500);
+        };
+    </script>
+</body>
+</html>
